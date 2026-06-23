@@ -1,4 +1,4 @@
-# CUSS (Cetak Ulang Surat Secara Online)
+# CUSS (Cepat Urus Surat Surat)
 
 Aplikasi **CUSS** adalah platform digital berbasis Next.js untuk digitalisasi pengajuan dokumen resmi desa dengan pelacakan _real-time_ dan asisten pintar berbasis AI (Gemini).
 
@@ -56,5 +56,6 @@ npm run dev
 
 Aplikasi akan berjalan pada port **3001**. Buka browser Anda dan akses:
 [http://localhost:3001](http://localhost:3001)
+Link Demo: [https://cuss-cepat.vercel.app/](https://cuss-cepat.vercel.app/)
 
 ---
