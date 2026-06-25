@@ -74,7 +74,7 @@ export function AdminDataProvider({ children }: { children: ReactNode }) {
       .from('Surat')
       .select(`
         id, pemohon_id, jenis_surat, status, created_at, subjek, no_pengajuan, no_surat, updated_at,
-        tanggal_disetujui,
+        tanggal_disetujui, is_mewakili, nama_subjek,
         pemohon:Users!pemohon_id(nama, nik, jenis_kelamin, foto)
       `)
       .order('created_at', { ascending: false });

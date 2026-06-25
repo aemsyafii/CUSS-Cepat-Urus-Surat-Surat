@@ -243,7 +243,7 @@ export default function ClientForm({ user }: { user: any }) {
 
     setIsCompressing(true);
     const options = {
-      maxSizeMB: 0.4, // Target ~400KB agar tajam namun tetap hemat storage
+      maxSizeMB: 0.5, // Target ~500KB agar tajam namun tetap hemat storage
       maxWidthOrHeight: 1280,
       useWebWorker: true,
       fileType: 'image/webp',
