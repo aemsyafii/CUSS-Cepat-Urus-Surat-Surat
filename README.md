@@ -42,9 +42,9 @@ Project ini menggunakan Supabase sebagai database. Jalankan inisialisasi skema d
 2. Buka menu **SQL Editor** -> **New Query**.
 3. Salin seluruh isi dari file [supabase-schema-baru.sql](file:///e:/02%20Project/00%20Digital/CUSS/supabase-schema-baru.sql) yang ada di root project ini.
 4. Tempel (_paste_) ke SQL Editor Supabase dan klik **Run**.
-5. Proses ini akan membuat tabel-tabel baru, relasi, fungsi RLS, storage bucket, dan menyemai (_seed_) data akun demo berikut:
-   - **Admin**: Username: `kepaladesa` | Password: `admin123`
-   - **Warga**: NIK: `1234567890123456` | Password: `warga123`
+5. Proses ini akan membuat tabel-tabel baru, relasi, fungsi RLS, storage bucket, dan menyemai (_seed_) data akun demo berikut (Anda dapat login menggunakan Email atau Username):
+   - **Admin**: Username: `kepaladesa` | Email: `admin_kepaladesa@cuss.internal` | Password: `admin123`
+   - **Warga**: Email: `1234567890123456@cuss.internal` | Password: `warga123`
 
 ### Langkah 4: Jalankan Server Development
 

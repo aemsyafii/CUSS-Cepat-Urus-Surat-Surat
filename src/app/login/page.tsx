@@ -197,7 +197,17 @@ export default function LoginPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier, password }),
       });
-      const data = await res.json();
+
+      let data;
+      const contentType = res.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        console.error('[Auth] Received non-JSON response from server:', text);
+        throw new Error('Server mengirimkan respon yang tidak valid (bukan JSON). Silakan periksa log server.');
+      }
+
       if (!res.ok) throw new Error(data.error || 'Login gagal.');
 
       router.push(data.redirectUrl);
