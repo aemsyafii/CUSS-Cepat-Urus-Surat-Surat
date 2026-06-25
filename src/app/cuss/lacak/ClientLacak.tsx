@@ -157,22 +157,109 @@ export default function ClientLacak({ listSurat, user }: { listSurat: any[], use
                 </svg>
               </button>
             </div>
-            <div className="mb-10 pr-12">
-              <p className="text-gray-500 font-semibold text-sm mb-1 uppercase tracking-wider">No. Pengajuan Surat</p>
-              <h3 className="text-[28px] font-black text-gray-900 leading-none">
-                #{selectedSurat.no_pengajuan || selectedSurat.id.split('-')[0].toUpperCase()}
-              </h3>
-              <div className="mt-4">
-                <p className="text-xs text-gray-400 font-bold mb-0.5">STATUS TERKINI</p>
-                <p className={`font-bold text-[15px] ${
-                  selectedSurat.status === 'Masuk' ? 'text-blue-500' :
-                  selectedSurat.status === 'Diproses' ? 'text-amber-500' :
-                  selectedSurat.status === 'Selesai' ? 'text-emerald-500' : 'text-red-500'
-                }`}>{selectedSurat.status.toUpperCase()}</p>
+            {/* Scrollable Modal Content */}
+            <div className="max-h-[calc(100vh-140px)] overflow-y-auto pr-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <style>{`
+                .no-scrollbar::-webkit-scrollbar { display: none; }
+              `}</style>
+              <div className="no-scrollbar">
+                <div className="mb-6 pr-12">
+                  <p className="text-gray-500 font-semibold text-sm mb-1 uppercase tracking-wider">No. Pengajuan Surat</p>
+                  <h3 className="text-[28px] font-black text-gray-900 leading-none">
+                    #{selectedSurat.no_pengajuan || selectedSurat.id.split('-')[0].toUpperCase()}
+                  </h3>
+                  {selectedSurat.is_mewakili && (
+                    <p className="mt-1.5 text-[14px] text-gray-500 font-semibold uppercase tracking-wider">
+                      Atas Nama: <span className="font-extrabold text-gray-900 leading-none">{selectedSurat.nama_subjek}</span>
+                    </p>
+                  )}
+                  <div className="mt-2.5">
+                    <p className="text-xs text-gray-400 font-bold mb-0.5">STATUS TERKINI</p>
+                    <p className={`font-bold text-[15px] ${
+                      selectedSurat.status === 'Masuk' ? 'text-blue-500' :
+                      selectedSurat.status === 'Diproses' ? 'text-amber-500' :
+                      selectedSurat.status === 'Selesai' ? 'text-emerald-500' : 'text-red-500'
+                    }`}>{selectedSurat.status.toUpperCase()}</p>
+                  </div>
+                </div>
+
+                {/* Attachments / Lampiran Badge */}
+                {selectedSurat.dokumen_lampiran && selectedSurat.dokumen_lampiran.length > 0 && (
+                  <div className="mb-6">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-xl text-[11px] font-bold border border-emerald-100/60 uppercase tracking-wider">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                      </svg>
+                      {selectedSurat.dokumen_lampiran.length} Lampiran Pendukung
+                    </span>
+                  </div>
+                )}
+
+                {/* Garis Waktu (Timeline Stepper) */}
+                <div className="relative pl-3 mt-8">
+                  {/* Node 1: Masuk (Awal) */}
+                  <div className="relative pb-8">
+                    <div className="absolute left-[-11px] top-1.5 w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-50 z-10"></div>
+                    <div className="absolute left-[-6px] top-4 w-px h-[calc(100%+8px)] bg-emerald-500"></div>
+                    <div className="pl-6">
+                      <p className="text-emerald-600 font-bold text-sm mb-1">
+                        {mounted ? new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(selectedSurat.created_at)) : ''} WIB
+                      </p>
+                      <p className="text-gray-500 text-sm font-medium leading-relaxed uppercase">
+                        Berhasil Diajukan<br />
+                        <span className="text-xs text-gray-400 normal-case">Menunggu validasi tim aparatur desa.</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Node 2: Diproses */}
+                  <div className="relative pb-8">
+                    <div className={`absolute left-[-11px] top-1.5 w-3 h-3 rounded-full z-10 ${['Diproses', 'Selesai', 'Ditolak'].includes(selectedSurat.status) ? 'bg-emerald-500 ring-4 ring-emerald-50' : 'bg-gray-300'}`}></div>
+                    <div className={`absolute left-[-6px] top-4 w-px h-[calc(100%+8px)] ${['Selesai', 'Ditolak'].includes(selectedSurat.status) ? 'bg-emerald-500' : 'bg-gray-200'}`}></div>
+                    <div className="pl-6">
+                      <p className={`font-bold text-sm mb-1 ${['Diproses', 'Selesai', 'Ditolak'].includes(selectedSurat.status) ? 'text-emerald-600' : 'text-gray-500'}`}>
+                        {(selectedSurat.tanggal_diproses || (selectedSurat.status === 'Ditolak' && selectedSurat.tanggal_ditolak))
+                          ? (mounted ? `${new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(selectedSurat.tanggal_diproses || selectedSurat.tanggal_ditolak))} WIB` : '')
+                          : (['Diproses', 'Selesai', 'Ditolak'].includes(selectedSurat.status) ? 'Sedang Berlangsung' : 'Menunggu...')}
+                      </p>
+                      <p className="text-gray-500 text-sm font-medium leading-relaxed uppercase">
+                        DIVERIFIKASI & DIPROSES<br />
+                        <span className="text-xs text-gray-400 normal-case">Sedang dalam tahap administrasi / persetujuan Kades.</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Node 3: Keputusan Akhir */}
+                  <div className="relative">
+                    <div className={`absolute left-[-11px] top-1.5 w-3 h-3 rounded-full z-10 ${['Selesai', 'Ditolak'].includes(selectedSurat.status) ? (selectedSurat.status === 'Selesai' ? 'bg-emerald-500 ring-4 ring-emerald-50' : 'bg-red-500 ring-4 ring-red-50') : 'bg-gray-300'}`}></div>
+                    <div className="pl-6 pb-2">
+                      <p className={`font-bold text-sm mb-1 ${selectedSurat.status === 'Selesai' ? 'text-emerald-600' : (selectedSurat.status === 'Ditolak' ? 'text-red-500' : 'text-gray-500')}`}>
+                        {selectedSurat.status === 'Selesai' 
+                          ? (selectedSurat.tanggal_disetujui 
+                            ? `${new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(selectedSurat.tanggal_disetujui))} WIB`
+                            : 'Surat Telah Terbit')
+                          : selectedSurat.status === 'Ditolak'
+                            ? (selectedSurat.tanggal_ditolak 
+                              ? (mounted ? `${new Intl.DateTimeFormat('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(selectedSurat.tanggal_ditolak))} WIB` : '')
+                              : 'Pengajuan Ditolak')
+                            : 'Validasi Akhir'}
+                      </p>
+                      <p className={`text-gray-500 text-sm font-medium leading-relaxed ${selectedSurat.status === 'Ditolak' ? '' : 'uppercase'}`}>
+                        {selectedSurat.status === 'Selesai' 
+                          ? 'SIAP DIAMBIL DI BALAI DESA' 
+                          : selectedSurat.status === 'Ditolak' 
+                            ? (
+                              <>
+                                <span className="block text-red-600 font-semibold text-sm mb-1 uppercase">PENGAJUAN DITOLAK</span>
+                                <span className="text-gray-600 leading-normal">{selectedSurat.response_admin || 'Mohon Cek Keterangan'}</span>
+                              </>
+                            ) 
+                            : 'KEPUTUSAN ADMINISTRASI'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="text-[14px] font-medium text-gray-700 leading-relaxed bg-gray-50/50 p-5 rounded-2xl border border-gray-100">
-              {selectedSurat.keperluan}
             </div>
           </div>
         </div>, document.body

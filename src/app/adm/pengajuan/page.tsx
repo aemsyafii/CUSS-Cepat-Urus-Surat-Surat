@@ -1118,8 +1118,8 @@ export default function AdminPengajuanPage() {
                                    <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin">
                                       {selectedSurat.dokumen_lampiran.map((doc, idx) => {
                                         const rawPath = typeof doc === 'string' ? doc : doc.path;
-                                        const { data: { publicUrl: fullUrl } } = supabase.storage.from('dokumen_lampiran').getPublicUrl(rawPath);
-                                        const isImage = fullUrl.toLowerCase().match(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/);
+                                        const fullUrl = `/api/files?bucket=dokumen_lampiran&path=${encodeURIComponent(rawPath)}`;
+                                        const isImage = rawPath.toLowerCase().match(/\.(jpg|jpeg|png|gif|webp)$/);
                                         return (
                                            <div 
                                              key={idx} 
@@ -1670,8 +1670,8 @@ export default function AdminPengajuanPage() {
                             <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-6">
                               {selectedSurat.dokumen_lampiran.map((doc, idx) => {
                                 const rawPath = typeof doc === 'string' ? doc : doc.path;
-                                const { data: { publicUrl: fullUrl } } = supabase.storage.from('dokumen_lampiran').getPublicUrl(rawPath);
-                                const isImage = fullUrl.toLowerCase().match(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/);
+                                const fullUrl = `/api/files?bucket=dokumen_lampiran&path=${encodeURIComponent(rawPath)}`;
+                                const isImage = rawPath.toLowerCase().match(/\.(jpg|jpeg|png|gif|webp)$/);
                                 
                                 return (
                                   <div 

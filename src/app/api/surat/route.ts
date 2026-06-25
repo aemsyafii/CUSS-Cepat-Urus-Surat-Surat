@@ -58,6 +58,14 @@ export async function POST(req: Request) {
         jenis_surat: jenisSurat,
         keperluan: keperluan,
         subjek: finalSubjek,
+        is_mewakili: !!isMewakili,
+        nama_subjek: isMewakili && subjek ? subjek.nama : null,
+        nik_subjek: isMewakili && subjek ? subjek.nik : null,
+        hubungan_subjek: isMewakili && subjek ? subjek.hubungan : null,
+        jenis_kelamin_subjek: isMewakili && subjek ? subjek.jenis_kelamin : null,
+        alamat_subjek: isMewakili && subjek ? subjek.alamat : null,
+        rt_subjek: isMewakili && subjek ? subjek.rt : null,
+        rw_subjek: isMewakili && subjek ? subjek.rw : null,
         status: 'Masuk',
         dokumen_lampiran: dokumenLampiran || [],
       }])
@@ -105,7 +113,7 @@ export async function GET() {
 
     const { data: listSurat, error } = await adminSupabase
       .from('Surat')
-      .select('id, jenis_surat, status, keperluan, subjek, created_at')
+      .select('id, no_pengajuan, jenis_surat, status, keperluan, subjek, created_at, is_mewakili, nama_subjek, tanggal_diproses, tanggal_ditolak, tanggal_disetujui, response_admin')
       .eq('pemohon_id', user.id)
       .is('deleted_at', null)
       .order('created_at', { ascending: false });

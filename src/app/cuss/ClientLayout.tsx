@@ -372,13 +372,13 @@ export default function ClientLayout({ children, user }: { children: React.React
                         #{selectedSurat.no_pengajuan || selectedSurat.id.split('-')[0].toUpperCase()}
                       </h3>
 
-                      <div className="mt-1 inline-block">
-                        {selectedSurat.is_mewakili && (
-                          <p className="text-[13px] mb-1">
-                            <span className="font-semibold text-gray-400">ATAS NAMA: </span>
-                            <span className="font-bold text-gray-900 uppercase">{selectedSurat.nama_subjek}</span>
-                          </p>
-                        )}
+                      {selectedSurat.is_mewakili && (
+                        <p className="mt-1.5 text-[14px] text-gray-500 font-semibold uppercase tracking-wider">
+                          Atas Nama: <span className="font-extrabold text-gray-900 leading-none">{selectedSurat.nama_subjek}</span>
+                        </p>
+                      )}
+
+                      <div className="mt-2.5 inline-block">
                         <p className="text-xs text-gray-400 font-bold mb-0.5">STATUS TERKINI</p>
                         <p className={`font-bold text-[15px] ${
                           selectedSurat.status === 'Masuk' ? 'text-blue-500' :

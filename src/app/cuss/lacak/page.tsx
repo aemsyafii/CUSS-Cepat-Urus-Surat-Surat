@@ -24,7 +24,7 @@ export default async function Page() {
 
   const { data: listSurat, error } = await adminSupabase
     .from('Surat')
-    .select('id, no_pengajuan, jenis_surat, status, keperluan, response_admin, subjek, created_at, dokumen_lampiran')
+    .select('id, no_pengajuan, jenis_surat, status, keperluan, response_admin, subjek, created_at, dokumen_lampiran, is_mewakili, nama_subjek, tanggal_diproses, tanggal_ditolak, tanggal_disetujui')
     .eq('pemohon_id', user.id)
     .is('deleted_at', null)
     .order('created_at', { ascending: false });
