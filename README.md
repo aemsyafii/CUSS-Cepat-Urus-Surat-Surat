@@ -2,6 +2,29 @@
 
 Aplikasi **CUSS** adalah platform digital berbasis Next.js untuk digitalisasi pengajuan dokumen resmi desa dengan pelacakan _real-time_ dan asisten pintar berbasis AI (Gemini).
 
+## Fitur Utama
+
+### 1. Fitur untuk Warga
+
+- **Pengajuan Surat Online:** Mengajukan SKU, SKTM, Pengantar SKCK, Pengantar KTP/KK, Domisili, atau kustom lainnya. Dilengkapi dengan penyimpanan draf otomatis lokal (tidak hilang saat navigasi internal) dan opsi mengajukan untuk mewakili orang lain.
+- **Unggah Lampiran Berkas:** Mendukung unggah foto berkas pendukung dengan fitur kompresi otomatis di sisi klien ke format `.webp` (< 500KB) untuk menghemat kuota internet dan penyimpanan.
+- **Lacak Surat Real-time:** Memantau status pengajuan secara instan (_Masuk, Diproses, Selesai, Ditolak_) dengan linimasa status yang terupdate langsung menggunakan Supabase Realtime.
+- **Profil Lengkap & Geospasial:** Mengisi data diri lengkap dan menentukan titik koordinat rumah di peta interaktif Leaflet.
+
+### 2. Fitur untuk Admin (Perangkat Desa)
+
+- **Verifikasi Pengajuan:** Meninjau pengajuan warga, melihat berkas lampiran, melihat lokasi koordinat rumah di peta, memproses surat, atau menolaknya dengan catatan tertentu.
+- **Editor Surat & Cetak Otomatis:** Mengedit draf dokumen surat secara langsung dan mengintegrasikannya dengan master template `.docx` otomatis.
+- **Manajemen Warga:** Mengelola status warga (Aktif/Nonaktif), melakukan reset kata sandi, serta mengirimkan kredensial langsung lewat WhatsApp.
+- **Pengaturan Pelayanan:** Mengonfigurasi jam operasional kantor, daftar layanan surat, master template dokumen, serta pembersihan berkas lampiran lama untuk membebaskan ruang penyimpanan.
+
+### 3. Asisten AI (CUSS Assistant)
+
+- **Panduan Cerdas:** Chatbot interaktif berbasis Google Gemini 2.5 Flash untuk membantu memandu pengajuan surat warga dengan bahasa yang ramah dan sopan.
+- **Respons Kontekstual:** AI memahami profil warga dan data surat yang sedang dilacak warga untuk memberikan jawaban yang tepat sasaran.
+
+---
+
 ## Panduan Memulai (Quickstart)
 
 Ikuti langkah-langkah di bawah ini untuk menjalankan project di lingkungan lokal setelah Anda mengunduh/clone repositori ini.
@@ -60,3 +83,7 @@ Aplikasi akan berjalan pada port **3001**. Buka browser Anda dan akses:
 Link Demo: [https://cuss-cepat.vercel.app/](https://cuss-cepat.vercel.app/)
 
 ---
+
+### Oleh
+
+**Andre Maulana Syafi'i** (101230037)
