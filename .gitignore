@@ -46,4 +46,5 @@ next-env.d.ts
 *.docx
 *.md
 !README.md
+!PANDUAN_SINGKAT_PENGGUNAAN.md
 
